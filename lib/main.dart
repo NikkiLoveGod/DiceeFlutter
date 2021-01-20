@@ -1,56 +1,46 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-void main() {
-  return runApp(
-    MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.red,
-        appBar: AppBar(
-          title: Text('Dicee'),
-          backgroundColor: Colors.red,
-        ),
-        body: DicePage(),
-      ),
-    ),
-  );
-}
+void main() => runApp(Magic8BallPage());
 
-class DicePage extends StatefulWidget {
+class Magic8BallPage extends StatelessWidget {
   @override
-  _DicePageState createState() => _DicePageState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Magic 8 Ball'),
+          backgroundColor: Colors.blue.shade900,
+        ),
+        backgroundColor: Colors.blue,
+        body: Center(
+          child: Magic8Ball(),
+        ),
+      ),
+    );
+  }
 }
 
-class _DicePageState extends State<DicePage> {
-  int leftDiceNum = 1;
-  int rightDiceNum = 1;
+class Magic8Ball extends StatefulWidget {
+  @override
+  _Magic8BallState createState() => _Magic8BallState();
+}
 
-  void updateDiceNumbers() {
+class _Magic8BallState extends State<Magic8Ball> {
+  int ballQuestionNum = 1;
+
+  void changeQuestion() {
     setState(() {
-      leftDiceNum = Random().nextInt(6) + 1;
-      rightDiceNum = Random().nextInt(6) + 1;
+      ballQuestionNum = Random().nextInt(5) + 1;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        children: [
-          Expanded(
-            child: FlatButton(
-              onPressed: updateDiceNumbers,
-              child: Image.asset('images/dice$leftDiceNum.png'),
-            ),
-          ),
-          Expanded(
-            child: FlatButton(
-              onPressed: updateDiceNumbers,
-              child: Image.asset('images/dice$rightDiceNum.png'),
-            ),
-          ),
-        ],
-      ),
+    return FlatButton(
+      onPressed: changeQuestion,
+      child: Image.asset('images/ball$ballQuestionNum.png'),
     );
   }
 }
